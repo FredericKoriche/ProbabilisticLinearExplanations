@@ -42,7 +42,7 @@ class BaseConfig:
     eval_samples: int = 100000
     mip_timeout: int = 120
     n_bins: int = 4
-    n_runs: int = 1
+    n_runs: int = 10
     use_bias: bool = True
     explainer_names: list = field(default_factory=lambda: ["IHT", "LIME", "MIP"])
     dataset_ids: list = field(default_factory=list)
@@ -71,10 +71,8 @@ ALL_REG_DATASETS = [44146, 44024, 44962, 46328, 42352, 46132, 46286, 46139]
 # Sweeps run on two benchmarks per task, laid out as a 2 x 2 matrix of panels.
 # One sits below the dimension at which dense unanchored explanations overtake
 # ours and one above, so that the figure covers both regimes.
-# SWEEP_CLF_DATASETS = [179, 40536]      # Adult (179), Speed Dating (40536) 
-SWEEP_CLF_DATASETS = [40536]      # COMPAS (42192), Adult (179), 
-# SWEEP_REG_DATASETS = [42352, 44024]   # Student Performance (42352), California Housing (44024)
-SWEEP_REG_DATASETS = [44024]   # Student Performance (42352), California Housing (44024)
+SWEEP_CLF_DATASETS = [42192, 179]      # COMPAS (42192), Adult (179), 
+SWEEP_REG_DATASETS = [42352, 44024]   # Student Performance (42352), California Housing (44024)
 
 # Budgets. Resolution is finest where relevance actually moves -- going from one
 # coefficient to two changes everything, going from six to eight changes little
@@ -138,7 +136,7 @@ class GeneralizationRegressionConfig(RegressionConfig):
 class KSweepClassificationConfig(ClassificationConfig):
     dataset_ids: list = field(default_factory=lambda: list(SWEEP_CLF_DATASETS))
     k_range: list = field(default_factory=lambda: list(K_RANGE))
-    explainer_names: list = field(default_factory=lambda: ["IHT", "MIP"])
+    explainer_names: list = field(default_factory=lambda: ["IHT", "LIME", "MIP"])
 
 
 @dataclass
